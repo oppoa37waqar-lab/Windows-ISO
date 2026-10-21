@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Windows 11 ISO File Download (64-bit) – Bootable ISO for Clean Install</title>
+<meta name="description" content="Download Windows 11 ISO (64-bit), create a bootable USB and clean install with Rufus. Step-by-step guide and ISO resources at Windowstan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f6fb; --surface:#ffffff; --ink:#0f2238; --muted:#52657c; --line:#d8e2ee;
+  --accent:#0a5fd0; --accent-ink:#ffffff; --soft:#e2edfc; --ok:#12805c; --ok-soft:#dff5ec;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1624; --surface:#122238; --ink:#e8f0fa; --muted:#9db0c7; --line:#223652;
+    --accent:#5aa2ff; --accent-ink:#06182e; --soft:#173257; --ok:#4fd1a0; --ok-soft:#10382d;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1624; --surface:#122238; --ink:#e8f0fa; --muted:#9db0c7; --line:#223652;
+  --accent:#5aa2ff; --accent-ink:#06182e; --soft:#173257; --ok:#4fd1a0; --ok-soft:#10382d;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.65}
+a{color:var(--accent);text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-family:var(--display);line-height:1.12;margin:0;letter-spacing:-.015em}
+h1{font-size:clamp(2.1rem,5.2vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
+.brand{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none}
+.brand span{color:var(--accent)}
+.toggle{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;padding:.45rem .9rem;border-radius:999px;cursor:pointer}
+.toggle:hover{border-color:var(--accent)}
+
+/* hero */
+.hero{display:grid;gap:2.5rem;padding:2.5rem 0 4rem;align-items:center}
+@media(min-width:880px){.hero{grid-template-columns:1.15fr .85fr;padding-top:4rem}}
+.lede{margin-top:1.25rem;color:var(--muted);font-size:1.15rem;max-width:60ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.btn{display:inline-block;padding:.85rem 1.4rem;border-radius:10px;font-weight:600;text-decoration:none;border:2px solid var(--accent);transition:transform .15s,background .15s}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{color:var(--accent)}
+.btn:hover{transform:translateY(-2px)}
+
+/* window mock — the one memorable element */
+.win{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 50px -24px rgba(10,60,140,.45);overflow:hidden}
+.win-bar{display:flex;align-items:center;gap:.4rem;padding:.7rem 1rem;background:var(--soft);font-size:.85rem;color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.win-body{padding:1.5rem}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:76px;margin-bottom:1.1rem}
+.panes i{display:block;height:34px;background:var(--accent);border-radius:3px}
+.panes i:nth-child(2){opacity:.75}.panes i:nth-child(3){opacity:.55}.panes i:nth-child(4){opacity:.35}
+.spec{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-top:1px solid var(--line);font-size:.97rem}
+.spec b{font-weight:600}.spec span{color:var(--muted);text-align:right}
+.bar{height:8px;background:var(--soft);border-radius:99px;margin-top:1rem;overflow:hidden}
+.bar div{height:100%;width:100%;background:var(--accent);border-radius:99px;transform-origin:left;animation:fill 1.6s .3s ease-out both}
+@keyframes fill{from{transform:scaleX(0)}}
+.win-note{margin-top:.5rem;font-size:.85rem;color:var(--muted)}
+
+/* sections */
+section{padding:3.5rem 0;border-top:1px solid var(--line)}
+.head{max-width:60ch;margin-bottom:2rem}
+.head p{margin-top:.75rem;color:var(--muted)}
+.intro{max-width:70ch;font-size:1.1rem}
+
+/* features: two-column ruled list */
+.features{list-style:none;margin:0;padding:0;display:grid;gap:0 3rem}
+@media(min-width:760px){.features{grid-template-columns:1fr 1fr}}
+.features li{display:flex;gap:.85rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.tick{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-weight:700;font-size:.85rem;margin-top:.15rem}
+
+/* steps — a true sequence, so numbered */
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;max-width:720px}
+.steps li{counter-increment:s;position:relative;padding:0 0 2rem 3.4rem}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700}
+.steps li::after{content:"";position:absolute;left:1.2rem;top:2.6rem;bottom:.2rem;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps p{color:var(--muted);margin-top:.25rem}
+.tip{margin-top:1rem;padding:1rem 1.2rem;background:var(--soft);border-radius:10px;max-width:720px}
+
+/* requirements checker */
+.check{display:grid;gap:1.5rem}
+@media(min-width:820px){.check{grid-template-columns:1.2fr .8fr;align-items:start}}
+.reqs{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.5rem 1.25rem}
+.req{display:flex;gap:.9rem;align-items:flex-start;padding:.95rem 0;border-bottom:1px solid var(--line);cursor:pointer}
+.req:last-child{border-bottom:0}
+.req input{width:20px;height:20px;margin-top:.25rem;accent-color:var(--accent);flex:none}
+.req small{display:block;color:var(--muted);font-size:.9rem}
+.result{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.5rem;position:sticky;top:1rem}
+.result .count{font-family:var(--display);font-size:2.6rem;font-weight:800;line-height:1}
+.result p{margin-top:.6rem;color:var(--muted)}
+.result.ready{border-color:var(--ok);background:var(--ok-soft)}
+.result.ready .count{color:var(--ok)}
+
+/* FAQ */
+details{border-bottom:1px solid var(--line);max-width:720px}
+summary{cursor:pointer;padding:1rem 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{padding:0 0 1.1rem;color:var(--muted)}
+
+/* footer cta */
+.final{background:var(--accent);color:var(--accent-ink);border-radius:18px;padding:2.5rem 1.5rem;text-align:center;margin:1rem 0 3rem}
+.final p{max-width:52ch;margin:.8rem auto 1.5rem;opacity:.92}
+.final .btn{background:var(--accent-ink);color:var(--accent);border-color:var(--accent-ink)}
+footer{padding:0 0 2.5rem;color:var(--muted);font-size:.9rem;text-align:center}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://windowstan.com/">Windows<span>tan</span></a>
+    <button class="toggle" id="theme" type="button" aria-label="Switch colour theme">Switch theme</button>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Windows 11 ISO File Download (64-bit) – Bootable ISO for Clean Install</h1>
+        <p class="lede"><a href="https://windowstan.com/">Windows 11 ISO download</a> for your PC or laptop and enjoy a fast, secure clean install or upgrade. This 64-bit Windows 11 ISO is ready to burn to a bootable USB drive or DVD.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="https://windowstan.com/">Download Windows 11 ISO</a>
+          <a class="btn ghost" href="#install">See install steps</a>
+        </div>
+      </div>
+      <aside class="win" aria-label="Windows 11 ISO at a glance">
+        <div class="win-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp; Windows 11 Setup</div>
+        <div class="win-body">
+          <div class="panes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="spec"><b>Edition</b><span>Windows 11, 64-bit</span></div>
+          <div class="spec"><b>Format</b><span>ISO, bootable</span></div>
+          <div class="spec"><b>USB size</b><span>8 GB or larger</span></div>
+          <div class="spec"><b>Best for</b><span>Clean install, repair, upgrade</span></div>
+          <div class="bar" role="presentation"><div></div></div>
+          <p class="win-note">Ready to create installation media</p>
+        </div>
+      </aside>
+    </div>
+
+    <section>
+      <div class="head"><h2>Create installation media in minutes</h2></div>
+      <p class="intro">Use Rufus or the Media Creation Tool to create your installation media in minutes. For more Windows guides, tutorials and ISO files, visit <a href="https://windowstan.com/">Windowstan</a>.</p>
+    </section>
+
+    <section id="features">
+      <div class="head"><h2>Key features</h2></div>
+      <ul class="features">
+        <li><span class="tick" aria-hidden="true">✓</span><span>Latest <a href="https://windowstan.com/">Windows ISO file</a> with the newest security updates</span></li>
+        <li><span class="tick" aria-hidden="true">✓</span><span>Ready for bootable USB or DVD creation</span></li>
+        <li><span class="tick" aria-hidden="true">✓</span><span>Ideal for clean install, repair and upgrade</span></li>
+        <li><span class="tick" aria-hidden="true">✓</span><span>Optimized for 64-bit processors</span></li>
+        <li><span class="tick" aria-hidden="true">✓</span><span>Fast performance, modern design and improved security</span></li>
+        <li><span class="tick" aria-hidden="true">✓</span><span>Free upgrade path from Windows 10 on eligible PCs</span></li>
+      </ul>
+    </section>
+
+    <section id="install">
+      <div class="head"><h2>How to install Windows 11 from ISO</h2></div>
+      <ol class="steps">
+        <li><h3>Download the Windows 11 ISO file</h3><p>Save the 64-bit ISO to a folder you can find easily.</p></li>
+        <li><h3>Create a bootable USB with Rufus</h3><p>Use a USB drive of 8 GB or larger. Everything on it will be erased.</p></li>
+        <li><h3>Boot from the USB drive</h3><p>Restart your PC and choose the USB drive from the boot menu.</p></li>
+        <li><h3>Follow the on-screen instructions</h3><p>Setup walks you through the rest of the installation.</p></li>
+      </ol>
+      <div class="tip"><b>Tip:</b> Back up your files before a clean install. For more guides, see <a href="https://windowstan.com/">Windowstan</a>.</div>
+    </section>
+
+    <section id="requirements">
+      <div class="head">
+        <h2>Check your PC against the system requirements</h2>
+        <p>Tick each requirement your PC meets to see if it’s ready for Windows 11.</p>
+      </div>
+      <div class="check">
+        <div class="reqs" id="reqs">
+          <label class="req"><input type="checkbox"><span><b>64-bit processor</b><small>A compatible 64-bit CPU</small></span></label>
+          <label class="req"><input type="checkbox"><span><b>4 GB RAM</b><small>Minimum memory</small></span></label>
+          <label class="req"><input type="checkbox"><span><b>64 GB storage</b><small>Free space for the installation</small></span></label>
+          <label class="req"><input type="checkbox"><span><b>TPM 2.0</b><small>Trusted Platform Module</small></span></label>
+          <label class="req"><input type="checkbox"><span><b>UEFI with Secure Boot</b><small>Enabled in your firmware settings</small></span></label>
+        </div>
+        <div class="result" id="result" aria-live="polite">
+          <div class="count"><span id="n">0</span> of 5</div>
+          <p id="msg">Tick the requirements your PC meets.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="head"><h2>Quick answers</h2></div>
+      <details><summary>Can I use the ISO on a DVD instead of USB?</summary><p>Yes. The ISO is ready for bootable USB or DVD creation.</p></details>
+      <details><summary>Is it a clean install or an upgrade?</summary><p>Both work. The ISO suits clean installs, repairs and upgrades, including the free upgrade path from Windows 10 on eligible PCs.</p></details>
+      <details><summary>Which tool should I use to make the USB?</summary><p>Rufus or the Media Creation Tool. Either one creates installation media in minutes.</p></details>
+    </section>
+
+    <div class="final">
+      <h2>Ready to install Windows 11?</h2>
+      <p><a href="https://windowstan.com/" style="color:inherit">Windows 11 ISO download</a>, guides and tutorials are all in one place at Windowstan.</p>
+      <a class="btn" href="https://windowstan.com/">Visit Windowstan</a>
+    </div>
+  </main>
+
+  <footer>© <a href="https://windowstan.com/">Windowstan</a> · Windows ISO file guides</footer>
+</div>
+
+<script>
+(function(){
+  var boxes=document.querySelectorAll('#reqs input'),n=document.getElementById('n'),
+      msg=document.getElementById('msg'),res=document.getElementById('result');
+  function update(){
+    var c=0;boxes.forEach(function(b){if(b.checked)c++});
+    n.textContent=c;
+    var ready=c===boxes.length;
+    res.classList.toggle('ready',ready);
+    msg.textContent=ready?'Your PC meets every requirement. You’re ready to install.':
+      c===0?'Tick the requirements your PC meets.':(boxes.length-c)+' left to check before you install.';
+  }
+  boxes.forEach(function(b){b.addEventListener('change',update)});
+  var root=document.documentElement,btn=document.getElementById('theme');
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||
+      (!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+    root.setAttribute('data-theme',dark?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
